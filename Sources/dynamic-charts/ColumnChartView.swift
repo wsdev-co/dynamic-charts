@@ -23,26 +23,60 @@ public struct ColumnChartScheme: Identifiable{
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct ColumnChartView: View {
+    public init(symbol: Image = Image(systemName: "flame.fill"),
+                title: String = "",
+                title_color: Color = Color(.systemGreen),
+                subtitle: Text = Text("Nutritions"),
+                divider: Bool = false,
+                background: Color = Color.white,
+                chart_data: Array<ColumnChartScheme> = [],
+                x_axis_color: Color? = Color.gray.opacity(0.2),
+                x_name_color: Color? = Color.gray,
+                chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)],
+                is_selectable: Bool = false,
+                show_median: Bool = false,
+                selected_median_color: Color = Color("orange_color"),
+                unselect_median_color: Color = Color("graph_color")
+                selected: Int = 0) {
+        self.symbol = symbol
+        self.title = title
+        self.title_color = title_color
+        self.subtitle = subtitle
+        self.divider = divider
+        self.background = background
+        self.chart_data = chart_data
+        self.x_axis_color = x_axis_color
+        self.x_name_color = x_name_color
+        self.chart_gradient = chart_gradient
+        self.is_selectable = is_selectable
+        self.show_median = show_median
+        self.selected_median_color = selected_median_color
+        self.unselect_median_color = unselect_median_color
+        self.selected = selected
+    }
+    
     // MARK: View Swttings
-    public var symbol: Image = Image(systemName: "flame.fill")
-    public var title: String = ""
-    public var title_color: Color = Color(.systemGreen)
-    public var subtitle: Text = Text("Nutritions")
-    public var divider: Bool = false
-    public var background: Color = Color.white
+    public var symbol: Image
+    public var title: String
+    public var title_color: Color
+    public var subtitle: Text
+    public var divider: Bool
+    public var background: Color
     
     // MARK: Graph Settings
-    public var chart_data: Array<ColumnChartScheme> = []
-    public var x_axis_color: Color? = Color.gray.opacity(0.2)
-    public var x_name_color: Color? = Color.gray
-    public var chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)]
-    public var is_selectable: Bool = false
-    public var show_median: Bool = false
-    public var selected_median_color: Color = Color("orange_color")
-    public var unselect_median_color: Color = Color("graph_color")
+    public var chart_data: Array<ColumnChartScheme>
+    public var x_axis_color: Color?
+    public var x_name_color: Color?
+    public var chart_gradient: Array<Color>
+    public var is_selectable: Bool
+    public var show_median: Bool
+    public var selected_median_color: Color
+    public var unselect_median_color: Color
     
     // MARK: State
-    @State public var selected: Int = 0
+    @State public var selected: Int
+    
+    
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 5){
@@ -237,7 +271,7 @@ struct AnimatedBarGraph: View{
     // MARK: LOCAL VARIABLES || STATES
     @State var showBar: Bool = false
     let default_color: Array<Color> = [Color("graph_color"), Color("graph_color")]
-//    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+    //    let impactMed = UIImpactFeedbackGenerator(style: .medium)
     
     var body: some View{
         VStack(spacing: 0){
@@ -271,7 +305,7 @@ struct AnimatedBarGraph: View{
         .onTapGesture {
             if is_selectable {
                 withAnimation(.easeInOut.delay(0.06)){
-//                    impactMed.impactOccurred()
+                    //                    impactMed.impactOccurred()
                     //                    selected = each_graph_data.id //(selected == each_graph_data.id) ? 0 :
                     selected = (selected == each_graph_data.id) ? 0 : each_graph_data.id
                 }

@@ -23,15 +23,25 @@ public struct CircleChartScheme: Identifiable, Hashable {
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct CircleChartView: View {
-    // MARK: View Swttings
-    public var symbol: Image = Image(systemName: "flame.fill")
-    public var title: String = ""
-    public var title_color: Color = Color(.systemGreen)
-    public var subtitle: Text = Text("Nutritions")
-    public var divider: Bool = false
-    public var background: Color = Color.white
+    internal init(symbol: AnyView = AnyView(systemName: "flame.fill"), title: String = "", title_color: Color = Color(.systemGreen), subtitle: Text = Text("Nutritions"), divider: Bool = false, background: Color = Color.white, data: Array<CircleChartScheme> = []) {
+        self.symbol = symbol
+        self.title = title
+        self.title_color = title_color
+        self.subtitle = subtitle
+        self.divider = divider
+        self.background = background
+        self.data = data
+    }
     
-    public var data: Array<CircleChartScheme> = []
+    // MARK: View Swttings
+    public var symbol: AnyView
+    public var title: String
+    public var title_color: Color
+    public var subtitle: Text
+    public var divider: Bool
+    public var background: Color
+    
+    public var data: Array<CircleChartScheme>
     
     public var body: some View {
         GeometryReader { proxy in

@@ -25,22 +25,35 @@ public struct BarChartScheme: Identifiable{
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct BarChartView: View {
+    internal init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")), title: String = "", title_color: Color = Color(.systemGreen), subtitle: Text = Text("Nutritions"), divider: Bool = false, background: Color = Color.white, chart_data: Array<BarChartScheme> = [], chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)], is_selectable: Bool = false, selected: Int = 0) {
+        self.symbol = symbol
+        self.title = title
+        self.title_color = title_color
+        self.subtitle = subtitle
+        self.divider = divider
+        self.background = background
+        self.chart_data = chart_data
+        self.chart_gradient = chart_gradient
+        self.is_selectable = is_selectable
+        self.selected = selected
+    }
+    
     
     // MARK: View Swttings
-    public var symbol: AnyView = AnyView(Image(systemName: "flame.fill"))
-    public var title: String = ""
-    public var title_color: Color = Color(.systemGreen)
-    public var subtitle: Text = Text("Nutritions")
-    public var divider: Bool = false
-    public var background: Color = Color.white
+    public var symbol: AnyView
+    public var title: String
+    public var title_color: Color
+    public var subtitle: Text
+    public var divider: Bool
+    public var background: Color
     
     // MARK: Graph Settings
-    public var chart_data: Array<BarChartScheme> = []
-    public var chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)]
-    public var is_selectable: Bool = false
+    public var chart_data: Array<BarChartScheme>
+    public var chart_gradient: Array<Color>
+    public var is_selectable: Bool
     
     // MARK: State
-    @State public var selected: Int = 0
+    @State public var selected: Int
     
     public var body: some View {
         GeometryReader { proxy in
