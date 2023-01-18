@@ -139,15 +139,13 @@ public struct ColumnChartView: View {
                     HStack{
                         ForEach(Array(zip(chart_data.indices, chart_data)), id: \.0){ index, each_data in
                             VStack(spacing: 0){
-                                VStack(spacing: 5){
-                                    AnimatedBarGraph(selected: $selected,
-                                                     each_graph_data: each_data,
-                                                     index: index,
-                                                     graph_color: chart_gradient,
-                                                     is_selectable: is_selectable,
-                                                     show_values: (x_name_color != nil))
-                                }
-                                .frame(height: each_data.value == 0 ? 0 : getBarHeight(point: each_data.value, size: proxy.size))
+                                AnimatedBarGraph(selected: $selected,
+                                                 each_graph_data: each_data,
+                                                 index: index,
+                                                 graph_color: chart_gradient,
+                                                 is_selectable: is_selectable,
+                                                 show_values: (x_name_color != nil))
+                                    .frame(height: each_data.value == 0 ? 0 : getBarHeight(point: each_data.value, size: proxy.size))
                                 
                                 // MARK: Bottom Text
                                 Text(each_data.name)
@@ -155,7 +153,6 @@ public struct ColumnChartView: View {
                                     .foregroundColor(x_name_color ?? Color(.white).opacity(0))
                                     .frame(height: 25,alignment: .bottom)
                             }
-                            .frame(maxWidth: 30, maxHeight: .infinity, alignment: .bottom)
                             
                             // Spacer arguments
                             if chart_data.count != index+1 {
