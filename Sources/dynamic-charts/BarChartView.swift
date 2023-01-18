@@ -9,104 +9,110 @@ import SwiftUI
 
 
 // MARK: SCHEME
+@available(macOS 12, *)
+@available(iOS 12, *)
 public struct BarChartScheme: Identifiable{
-    var id: Int
-    var header: String? = nil
-    var subheader: String? = nil
-    var box_text: String? = nil
-    var value: CGFloat
-    var color: Color? = nil
+    public var id: Int
+    public var header: String? = nil
+    public var subheader: String? = nil
+    public var box_text: String? = nil
+    public var value: CGFloat
+    public var color: Color? = nil
 }
 
 
 // MARK: VIEW
+@available(macOS 12, *)
+@available(iOS 12, *)
 public struct BarChartView: View {
     
     // MARK: View Swttings
-    var symbol: AnyView = AnyView(Image(systemName: "flame.fill"))
-    var title: String = ""
-    var title_color: Color = Color(.systemGreen)
-    var subtitle: Text = Text("Nutritions")
-    var divider: Bool = false
-    var background: Color = Color.white
+    public var symbol: AnyView = AnyView(Image(systemName: "flame.fill"))
+    public var title: String = ""
+    public var title_color: Color = Color(.systemGreen)
+    public var subtitle: Text = Text("Nutritions")
+    public var divider: Bool = false
+    public var background: Color = Color.white
     
     // MARK: Graph Settings
-    var chart_data: Array<BarChartScheme> = []
-    var chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)]
-    var is_selectable: Bool = false
+    public var chart_data: Array<BarChartScheme> = []
+    public var chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)]
+    public var is_selectable: Bool = false
     
     // MARK: State
-    @State var selected: Int = 0
+    @State public var selected: Int = 0
     
-    var body: some View {
-        VStack(alignment: .leading, spacing: 5){
-            // MARK: Title
-            HStack{
-                symbol
-                    .foregroundColor(title_color)
+    public var body: some View {
+        GeometryReader { proxy in
+            VStack(alignment: .leading, spacing: 5){
+                // MARK: Title
+                HStack{
+                    symbol
+                        .foregroundColor(title_color)
+                    
+                    Text(title)
+                        .font(.system(.subheadline, design: .rounded))
+                        .foregroundColor(title_color)
+                        .fontWeight(.semibold)
+                    
+                    Spacer()
+                }
                 
-                Text(title)
-                    .font(.system(.subheadline, design: .rounded))
-                    .foregroundColor(title_color)
-                    .fontWeight(.semibold)
+                // MARK: SUBTITLE
+                subtitle
                 
-                Spacer()
-            }
-            
-            // MARK: SUBTITLE
-            subtitle
-            
-            // MARK: DIVIDER
-            if divider {
-                Divider()
-                    .padding(.vertical, 5)
-            }
-            
-            // MARK: Bar Graph
-            VStack(alignment: .leading, spacing: 15){
-                ForEach(Array(zip(chart_data.indices, chart_data)), id: \.0){ index, each_data in
-                    LazyVStack(alignment: .leading, spacing: 2){
-                        HStack(alignment: .bottom, spacing: 5){
-                            if each_data.header != nil {
-                                Text(each_data.header!)
-                                    .font(.system(.title, design: .rounded))
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(Color.black)
+                // MARK: DIVIDER
+                if divider {
+                    Divider()
+                        .padding(.vertical, 5)
+                }
+                
+                // MARK: Bar Graph
+                VStack(alignment: .leading, spacing: 15){
+                    ForEach(Array(zip(chart_data.indices, chart_data)), id: \.0){ index, each_data in
+                        LazyVStack(alignment: .leading, spacing: 2){
+                            HStack(alignment: .bottom, spacing: 5){
+                                if each_data.header != nil {
+                                    Text(each_data.header!)
+                                        .font(.system(.title, design: .rounded))
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(Color.black)
+                                }
+                                if each_data.subheader != nil {
+                                    Text(each_data.subheader!)
+                                        .font(.system(.body, design: .rounded))
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(Color.gray)
+                                }
                             }
-                            if each_data.subheader != nil {
-                                Text(each_data.subheader!)
-                                    .font(.system(.body, design: .rounded))
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(Color.gray)
-                            }
-                        }
-                        ZStack(alignment: .leading){
-                            HorizontalAnimatedBarGraph(selected: $selected,
-                                                       each_graph_data: each_data,
-                                                       index: index,
-                                                       graph_color: chart_gradient,
-                                                       is_selectable: is_selectable)
-                                .frame(width: each_data.value == 0 ? 0 : GetBarWidth(point: each_data.value, size: UIScreen.main.bounds.size), height: 25, alignment: .leading)
-                            
-                            if each_data.box_text != nil {
-                                Text(each_data.box_text!)
-                                    .font(.system(.subheadline, design: .rounded))
-                                    .fontWeight(.semibold)
-                                    .foregroundColor((selected == each_data.id || selected == 0) ? Color.white : Color(.lightGray))
-                                    .padding(10)
+                            ZStack(alignment: .leading){
+                                HorizontalAnimatedBarGraph(selected: $selected,
+                                                           each_graph_data: each_data,
+                                                           index: index,
+                                                           graph_color: chart_gradient,
+                                                           is_selectable: is_selectable)
+                                    .frame(width: each_data.value == 0 ? 0 : GetBarWidth(point: each_data.value, size: proxy.size), height: 25, alignment: .leading)
+                                
+                                if each_data.box_text != nil {
+                                    Text(each_data.box_text!)
+                                        .font(.system(.subheadline, design: .rounded))
+                                        .fontWeight(.semibold)
+                                        .foregroundColor((selected == each_data.id || selected == 0) ? Color.white : Color(.lightGray))
+                                        .padding(10)
+                                }
                             }
                         }
                     }
                 }
+                .padding(.top, 5)
             }
-            .padding(.top, 5)
-        }
-        .padding(20)
-        .background{
-            Rectangle()
-                .foregroundColor(background)
-                .cornerRadius(10)
-            
+            .padding(20)
+            .background{
+                Rectangle()
+                    .foregroundColor(background)
+                    .cornerRadius(10)
+                
+            }
         }
     }
     
@@ -131,6 +137,8 @@ public struct BarChartView: View {
 
 
 // MARK: FOR ANIMATION
+@available(macOS 12, *)
+@available(iOS 12, *)
 struct HorizontalAnimatedBarGraph: View {
     // MARK: STATES
     @Binding var selected: Int
@@ -142,7 +150,7 @@ struct HorizontalAnimatedBarGraph: View {
     // MARK: LOCAL VARIABLES || STATES
     @State var showBar: Bool = false
     let default_color: Array<Color> = [Color("graph_color"), Color("graph_color")]
-    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+//    let impactMed = UIImpactFeedbackGenerator(style: .medium)
     
     var body: some View{
         VStack(spacing: 1){
@@ -168,7 +176,7 @@ struct HorizontalAnimatedBarGraph: View {
         .onTapGesture {
             if is_selectable {
                 withAnimation(.easeInOut){
-                    impactMed.impactOccurred()
+//                    impactMed.impactOccurred()
                     //                    selected = each_graph_data.id //(selected == each_graph_data.id) ? 0 :
                     selected = (selected == each_graph_data.id) ? 0 : each_graph_data.id
                 }

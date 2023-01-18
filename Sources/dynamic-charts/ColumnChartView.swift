@@ -9,38 +9,42 @@ import SwiftUI
 
 
 // MARK: SCHEME
+@available(macOS 12, *)
+@available(iOS 12, *)
 public struct ColumnChartScheme: Identifiable{
-    var id: Int
-    var name: String
-    var value: CGFloat
-    var color: Color?
+    public var id: Int
+    public var name: String
+    public var value: CGFloat
+    public var color: Color?
 }
 
 
 // MARK: VIEW
+@available(macOS 12, *)
+@available(iOS 12, *)
 public struct ColumnChartView: View {
     // MARK: View Swttings
-    var symbol: Image = Image(systemName: "flame.fill")
-    var title: String = ""
-    var title_color: Color = Color(.systemGreen)
-    var subtitle: Text = Text("Nutritions")
-    var divider: Bool = false
-    var background: Color = Color.white
+    public var symbol: Image = Image(systemName: "flame.fill")
+    public var title: String = ""
+    public var title_color: Color = Color(.systemGreen)
+    public var subtitle: Text = Text("Nutritions")
+    public var divider: Bool = false
+    public var background: Color = Color.white
     
     // MARK: Graph Settings
-    var chart_data: Array<ColumnChartScheme> = []
-    var x_axis_color: Color? = Color.gray.opacity(0.2)
-    var x_name_color: Color? = Color.gray
-    var chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)]
-    var is_selectable: Bool = false
-    var show_median: Bool = false
-    var selected_median_color: Color = Color("orange_color")
-    var unselect_median_color: Color = Color("graph_color")
+    public var chart_data: Array<ColumnChartScheme> = []
+    public var x_axis_color: Color? = Color.gray.opacity(0.2)
+    public var x_name_color: Color? = Color.gray
+    public var chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)]
+    public var is_selectable: Bool = false
+    public var show_median: Bool = false
+    public var selected_median_color: Color = Color("orange_color")
+    public var unselect_median_color: Color = Color("graph_color")
     
     // MARK: State
-    @State var selected: Int = 0
+    @State public var selected: Int = 0
     
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 5){
             // MARK: Title
             HStack{
@@ -53,10 +57,6 @@ public struct ColumnChartView: View {
                     .fontWeight(.semibold)
                 
                 Spacer()
-                //
-                //                Image(systemName: "chevron.right")
-                //                    .foregroundColor(Color(.systemGray2))
-                //                    .font(.system(size: 15))
             }
             
             // MARK: SUBTITLE
@@ -93,6 +93,8 @@ public struct ColumnChartView: View {
 
 
 // MARK: GRAPH CHARTS
+@available(macOS 12, *)
+@available(iOS 12, *)
 struct BarGraph: View {
     var graph_data: Array<ColumnChartScheme>
     var x_axis_color: Color?
@@ -176,10 +178,8 @@ struct BarGraph: View {
                     .padding(.bottom, 30)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(height: proxy.size.height / 4)
         }
-        // Fixed Height
-        .frame(height: UIScreen.main.bounds.height / 4)
     }
     
     // MARK: FUNCTIONS
@@ -223,6 +223,8 @@ struct BarGraph: View {
 
 
 // MARK: FOR ANIMATION
+@available(macOS 12, *)
+@available(iOS 12, *)
 struct AnimatedBarGraph: View{
     // MARK: STATES
     @Binding var selected: Int
@@ -234,9 +236,8 @@ struct AnimatedBarGraph: View{
     
     // MARK: LOCAL VARIABLES || STATES
     @State var showBar: Bool = false
-    let generator = UINotificationFeedbackGenerator()
     let default_color: Array<Color> = [Color("graph_color"), Color("graph_color")]
-    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+//    let impactMed = UIImpactFeedbackGenerator(style: .medium)
     
     var body: some View{
         VStack(spacing: 0){
@@ -249,13 +250,13 @@ struct AnimatedBarGraph: View{
             }
             
             if each_graph_data.color != nil {
-                RoundedShape()
+                RoundedRectangle(cornerRadius: 5)
                     .foregroundColor(each_graph_data.color)
                     .frame(height: showBar ? nil : 0, alignment: .bottom)
             } else {
                 //                let is_selected: Bool = (selected == each_graph_data.id) //|| selected == 0
                 let is_selected: Bool = (selected == each_graph_data.id || selected == 0)
-                RoundedShape()
+                RoundedRectangle(cornerRadius: 5)
                     .fill(LinearGradient(gradient: .init(colors: is_selected ? graph_color : default_color), startPoint: .top, endPoint: .bottom))
                     .frame(height: showBar ? nil : 0, alignment: .bottom)
             }
@@ -270,7 +271,7 @@ struct AnimatedBarGraph: View{
         .onTapGesture {
             if is_selectable {
                 withAnimation(.easeInOut.delay(0.06)){
-                    impactMed.impactOccurred()
+//                    impactMed.impactOccurred()
                     //                    selected = each_graph_data.id //(selected == each_graph_data.id) ? 0 :
                     selected = (selected == each_graph_data.id) ? 0 : each_graph_data.id
                 }
@@ -281,9 +282,11 @@ struct AnimatedBarGraph: View{
 
 
 // MARK: Custom Rounded Rectangle (5,5,0,0)
-struct RoundedShape : Shape {
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: [.topLeft,.topRight], cornerRadii: CGSize(width: 5, height: 5))
-        return Path(path.cgPath)
-    }
-}
+//@available(macOS 12, *)
+//@available(iOS 12, *)
+//struct RoundedShape : Shape {
+//    func path(in rect: CGRect) -> Path {
+//        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: [.topLeft,.topRight], cornerRadii: CGSize(width: 5, height: 5))
+//        return Path(path.cgPath)
+//    }
+//}

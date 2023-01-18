@@ -9,85 +9,93 @@ import SwiftUI
 
 
 // MARK: CIRCLE GRAPH SCHEME
+@available(macOS 12, *)
+@available(iOS 12, *)
 public struct CircleChartScheme: Identifiable, Hashable {
-    var id: UUID? = UUID()
-    var value: CGFloat
-    var color: Color
-    var name: String
+    public var id: UUID? = UUID()
+    public var value: CGFloat
+    public var color: Color
+    public var name: String
 }
 
 
 // MARK: VIEW
+@available(macOS 12, *)
+@available(iOS 15, *)
 public struct CircleChartView: View {
     // MARK: View Swttings
-    var symbol: Image = Image(systemName: "flame.fill")
-    var title: String = ""
-    var title_color: Color = Color(.systemGreen)
-    var subtitle: Text = Text("Nutritions")
-    var divider: Bool = false
-    var background: Color = Color.white
+    public var symbol: Image = Image(systemName: "flame.fill")
+    public var title: String = ""
+    public var title_color: Color = Color(.systemGreen)
+    public var subtitle: Text = Text("Nutritions")
+    public var divider: Bool = false
+    public var background: Color = Color.white
     
-    var data: Array<CircleChartScheme> = []
+    public var data: Array<CircleChartScheme> = []
     
-    var body: some View {
-        VStack(alignment: .leading, spacing: 5){
-            // MARK: Title
-            HStack{
-                symbol
-                    .foregroundColor(title_color)
-                
-                Text(title)
-                    .font(.system(.subheadline, design: .rounded))
-                    .foregroundColor(title_color)
-                    .fontWeight(.semibold)
-                
-                Spacer()
-            }
-            
-            // MARK: SUBTITLE
-            subtitle
-            
-            // MARK: DIVIDER
-            if divider {
-                Divider()
-                    .padding(.vertical, 5)
-            }
-            
-            // MARK: Bar Graph
-            HStack{
-                ForEach(Array(zip(data.indices, data)), id: \.0){ index, each_data in
-                    ZStack(alignment: .center){
-                        AnimatedCircleGraphView(data: each_data,
-                                                index: index)
-                        
-                        Text(each_data.name)
-                            .font(.system(.subheadline, design: .rounded))
-                            .foregroundColor(Color("median_gray_color"))
-                            .fontWeight(.semibold)
-                    }
-                    .frame(maxWidth: UIScreen.main.bounds.width / 5, minHeight: UIScreen.main.bounds.height / 9, alignment: .center)
+    public var body: some View {
+        GeometryReader { proxy in
+            VStack(alignment: .leading, spacing: 5){
+                // MARK: Title
+                HStack{
+                    symbol
+                        .foregroundColor(title_color)
                     
-                    if data.count != index+1 {
-                        Spacer(minLength: 5)
+                    Text(title)
+                        .font(.system(.subheadline, design: .rounded))
+                        .foregroundColor(title_color)
+                        .fontWeight(.semibold)
+                    
+                    Spacer()
+                }
+                
+                // MARK: SUBTITLE
+                subtitle
+                
+                // MARK: DIVIDER
+                if divider {
+                    Divider()
+                        .padding(.vertical, 5)
+                }
+                
+                // MARK: Bar Graph
+                HStack{
+                    ForEach(Array(zip(data.indices, data)), id: \.0){ index, each_data in
+                        ZStack(alignment: .center){
+                            AnimatedCircleGraphView(data: each_data,
+                                                    index: index)
+                            
+                            Text(each_data.name)
+                                .font(.system(.subheadline, design: .rounded))
+                                .foregroundColor(Color("median_gray_color"))
+                                .fontWeight(.semibold)
+                        }
+                        .frame(maxWidth: proxy.size.width / 5, minHeight: proxy.size.height / 9, alignment: .center)
+                        
+                        if data.count != index+1 {
+                            Spacer(minLength: 5)
+                        }
                     }
                 }
+                .padding(.top, 10)
+                
+                
             }
-            .padding(.top, 10)
-            
-            
-        }
-        .padding(20)
-        .background{
-            Rectangle()
-                .foregroundColor(background)
-                .cornerRadius(10)
-            
+            .padding(20)
+            .background{
+                Rectangle()
+                    .foregroundColor(background)
+                    .cornerRadius(10)
+                
+            }
         }
     }
 }
 
 
 // MARK: ANIMATED CIRCLE GRAPH
+@available(macOS 12, *)
+@available(iOS 12, *)
 struct AnimatedCircleGraphView: View{
     @State var show_chart: Bool = false
     var data: CircleChartScheme
