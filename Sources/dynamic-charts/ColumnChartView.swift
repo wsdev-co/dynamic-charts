@@ -221,8 +221,9 @@ struct BarGraph: View {
                     .padding(.bottom, 30)
                 }
             }
-            .frame(height: proxy.size.height / 4)
+            .frame(height: proxy.size.height / 3)
         }
+        .background(Color.white)
     }
     
     // MARK: FUNCTIONS
