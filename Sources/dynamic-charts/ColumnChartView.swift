@@ -36,7 +36,7 @@ public struct ColumnChartView: View {
                 is_selectable: Bool = false,
                 show_median: Bool = false,
                 selected_median_color: Color = Color("orange_color"),
-                unselect_median_color: Color = Color("graph_color")
+                unselect_median_color: Color = Color("graph_color"),
                 selected: Int = 0) {
         self.symbol = symbol
         self.title = title
@@ -56,7 +56,7 @@ public struct ColumnChartView: View {
     }
     
     // MARK: View Swttings
-    public var symbol: Image
+    public var symbol: AnyView
     public var title: String
     public var title_color: Color
     public var subtitle: Text
