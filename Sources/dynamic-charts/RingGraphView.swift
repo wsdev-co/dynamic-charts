@@ -30,7 +30,7 @@ public struct CircleChartScheme: Identifiable, Hashable {
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct CircleChartView: View {
-    internal init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")), title: String = "", title_color: Color = Color(.systemGreen), subtitle: Text = Text("Nutritions"), divider: Bool = false, background: Color = Color.white, data: Array<CircleChartScheme> = []) {
+    public init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")), title: String = "", title_color: Color = Color(.systemGreen), subtitle: Text = Text("Nutritions"), divider: Bool = false, background: Color = Color.white, data: Array<CircleChartScheme> = []) {
         self.symbol = symbol
         self.title = title
         self.title_color = title_color

@@ -34,7 +34,7 @@ public struct BarChartScheme: Identifiable{
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct BarChartView: View {
-    internal init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")), title: String = "", title_color: Color = Color(.systemGreen), subtitle: Text = Text("Nutritions"), divider: Bool = false, background: Color = Color.white, chart_data: Array<BarChartScheme> = [], chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)], is_selectable: Bool = false, selected: Int = 0) {
+    public init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")), title: String = "", title_color: Color = Color(.systemGreen), subtitle: Text = Text("Nutritions"), divider: Bool = false, background: Color = Color.white, chart_data: Array<BarChartScheme> = [], chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)], is_selectable: Bool = false, selected: Int = 0) {
         self.symbol = symbol
         self.title = title
         self.title_color = title_color
