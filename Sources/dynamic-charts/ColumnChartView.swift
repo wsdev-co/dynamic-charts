@@ -23,7 +23,7 @@ public struct ColumnChartScheme: Identifiable{
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct ColumnChartView: View {
-    public init(symbol: Image = Image(systemName: "flame.fill"),
+    public init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")),
                 title: String = "",
                 title_color: Color = Color(.systemGreen),
                 subtitle: Text = Text("Nutritions"),
