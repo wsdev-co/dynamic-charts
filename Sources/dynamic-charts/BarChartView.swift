@@ -12,6 +12,15 @@ import SwiftUI
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct BarChartScheme: Identifiable{
+    internal init(id: Int, header: String? = nil, subheader: String? = nil, box_text: String? = nil, value: CGFloat, color: Color? = nil) {
+        self.id = id
+        self.header = header
+        self.subheader = subheader
+        self.box_text = box_text
+        self.value = value
+        self.color = color
+    }
+    
     public var id: Int
     public var header: String? = nil
     public var subheader: String? = nil
