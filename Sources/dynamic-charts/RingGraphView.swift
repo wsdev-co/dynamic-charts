@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: CIRCLE GRAPH SCHEME
 @available(macOS 12, *)
-@available(iOS 12, *)
+@available(iOS 15, *)
 public struct CircleChartScheme: Identifiable, Hashable {
     public var id: UUID? = UUID()
     public var value: CGFloat
@@ -95,7 +95,7 @@ public struct CircleChartView: View {
 
 // MARK: ANIMATED CIRCLE GRAPH
 @available(macOS 12, *)
-@available(iOS 12, *)
+@available(iOS 15, *)
 struct AnimatedCircleGraphView: View{
     @State var show_chart: Bool = false
     var data: CircleChartScheme

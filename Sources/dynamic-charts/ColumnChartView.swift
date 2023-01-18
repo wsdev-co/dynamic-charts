@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: SCHEME
 @available(macOS 12, *)
-@available(iOS 12, *)
+@available(iOS 15, *)
 public struct ColumnChartScheme: Identifiable{
     public var id: Int
     public var name: String
@@ -21,7 +21,7 @@ public struct ColumnChartScheme: Identifiable{
 
 // MARK: VIEW
 @available(macOS 12, *)
-@available(iOS 12, *)
+@available(iOS 15, *)
 public struct ColumnChartView: View {
     // MARK: View Swttings
     public var symbol: Image = Image(systemName: "flame.fill")
@@ -94,7 +94,7 @@ public struct ColumnChartView: View {
 
 // MARK: GRAPH CHARTS
 @available(macOS 12, *)
-@available(iOS 12, *)
+@available(iOS 15, *)
 struct BarGraph: View {
     var graph_data: Array<ColumnChartScheme>
     var x_axis_color: Color?
@@ -224,7 +224,7 @@ struct BarGraph: View {
 
 // MARK: FOR ANIMATION
 @available(macOS 12, *)
-@available(iOS 12, *)
+@available(iOS 15, *)
 struct AnimatedBarGraph: View{
     // MARK: STATES
     @Binding var selected: Int
@@ -283,7 +283,7 @@ struct AnimatedBarGraph: View{
 
 // MARK: Custom Rounded Rectangle (5,5,0,0)
 //@available(macOS 12, *)
-//@available(iOS 12, *)
+//@available(iOS 15, *)
 //struct RoundedShape : Shape {
 //    func path(in rect: CGRect) -> Path {
 //        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: [.topLeft,.topRight], cornerRadii: CGSize(width: 5, height: 5))

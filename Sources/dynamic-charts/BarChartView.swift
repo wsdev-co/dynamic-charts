@@ -10,7 +10,7 @@ import SwiftUI
 
 // MARK: SCHEME
 @available(macOS 12, *)
-@available(iOS 12, *)
+@available(iOS 15, *)
 public struct BarChartScheme: Identifiable{
     public var id: Int
     public var header: String? = nil
@@ -23,7 +23,7 @@ public struct BarChartScheme: Identifiable{
 
 // MARK: VIEW
 @available(macOS 12, *)
-@available(iOS 12, *)
+@available(iOS 15, *)
 public struct BarChartView: View {
     
     // MARK: View Swttings
@@ -138,7 +138,7 @@ public struct BarChartView: View {
 
 // MARK: FOR ANIMATION
 @available(macOS 12, *)
-@available(iOS 12, *)
+@available(iOS 15, *)
 struct HorizontalAnimatedBarGraph: View {
     // MARK: STATES
     @Binding var selected: Int
