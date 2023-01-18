@@ -12,7 +12,9 @@ import SwiftUI
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct ColumnChartScheme: Identifiable{
-    internal init(id: Int, name: String, value: CGFloat, color: Color? = nil) {
+    public init(id: Int,
+                  name: String,
+                  value: CGFloat, color: Color? = nil) {
         self.id = id
         self.name = name
         self.value = value

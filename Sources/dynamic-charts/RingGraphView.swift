@@ -12,7 +12,7 @@ import SwiftUI
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct CircleChartScheme: Identifiable, Hashable {
-    internal init(id: UUID? = UUID(), value: CGFloat, color: Color, name: String) {
+    public init(id: UUID? = UUID(), value: CGFloat, color: Color, name: String) {
         self.id = id
         self.value = value
         self.color = color
