@@ -107,7 +107,7 @@ public struct ColumnChartView: View {
                     destination!
                 }
             } label: {
-                VStack {
+                VStack(alignment: .leading, spacing: 5){
                     // MARK: Title
                     HStack{
                         symbol
