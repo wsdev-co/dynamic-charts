@@ -47,6 +47,7 @@ public struct ColumnChartView: View {
                 x_name_color: Color? = Color.gray,
                 chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)],
                 default_chart_gradient: Array<Color> = [Color.gray.opacity(0.3), Color.gray.opacity(0.3)],
+                show_animation: Bool = true,
                 is_selectable: Bool = false,
                 show_median: Bool = false,
                 selected_median_color: Color = Color("orange_color"),
@@ -66,6 +67,7 @@ public struct ColumnChartView: View {
         self.x_name_color = x_name_color
         self.chart_gradient = chart_gradient
         self.default_chart_gradient = default_chart_gradient
+        self.show_animation = show_animation
         self.is_selectable = is_selectable
         self.show_median = show_median
         self.selected_median_color = selected_median_color
@@ -90,6 +92,7 @@ public struct ColumnChartView: View {
     public var x_name_color: Color?
     public var chart_gradient: Array<Color>
     public var default_chart_gradient: Array<Color>
+    public var show_animation: Bool
     public var is_selectable: Bool
     public var show_median: Bool
     public var selected_median_color: Color
@@ -144,6 +147,7 @@ public struct ColumnChartView: View {
                      x_name_color: x_name_color,
                      graph_gradient: chart_gradient,
                      default_chart_gradient: default_chart_gradient,
+                     show_animation: show_animation,
                      is_selectable: is_selectable,
                      show_median: show_median,
                      selected_median_color: selected_median_color,
@@ -172,6 +176,7 @@ struct BarGraph: View {
     var x_name_color: Color?
     var graph_gradient: Array<Color>
     var default_chart_gradient: Array<Color>
+    var show_animation: Bool
     var is_selectable: Bool
     var show_median: Bool
     var selected_median_color: Color
@@ -212,6 +217,7 @@ struct BarGraph: View {
                                              graph_color: graph_gradient,
                                              is_selectable: is_selectable,
                                              show_values: (x_name_color != nil),
+                                             showBar: show_animation,
                                              default_chart_gradient: default_chart_gradient)
                         }
                         .frame(height: each_data.value == 0 ? 0 : get_column_height(column_value: each_data.value))
