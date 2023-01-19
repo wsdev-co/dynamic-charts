@@ -107,26 +107,28 @@ public struct ColumnChartView: View {
                     destination!
                 }
             } label: {
-                // MARK: Title
-                HStack{
-                    symbol
-                        .foregroundColor(title_color)
+                VStack {
+                    // MARK: Title
+                    HStack{
+                        symbol
+                            .foregroundColor(title_color)
+                        
+                        Text(title)
+                            .font(.system(.subheadline, design: .rounded))
+                            .foregroundColor(title_color)
+                            .fontWeight(.semibold)
+                            .multilineTextAlignment(.leading)
+                        
+                        Spacer()
+                    }
                     
-                    Text(title)
-                        .font(.system(.subheadline, design: .rounded))
-                        .foregroundColor(title_color)
+                    // MARK: SUBTITLE
+                    Text(subtitle)
+                        .font(.system(.title2, design: .rounded))
+                        .foregroundColor(subtitle_color)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.leading)
-                    
-                    Spacer()
                 }
-                
-                // MARK: SUBTITLE
-                Text(subtitle)
-                    .font(.system(.title2, design: .rounded))
-                    .foregroundColor(subtitle_color)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.leading)
             }
             .disabled(destination == nil)
             
