@@ -14,7 +14,8 @@ import SwiftUI
 public struct ColumnChartScheme: Identifiable{
     public init(id: Int,
                 name: String,
-                value: CGFloat, color: Color? = nil) {
+                value: CGFloat,
+                color: Color? = nil) {
         self.id = id
         self.name = name
         self.value = value
@@ -47,7 +48,7 @@ public struct ColumnChartView: View {
                 selected_median_color: Color = Color("orange_color"),
                 unselect_median_color: Color = Color("graph_color"),
                 selected: Int = 0,
-                max_height: CGFloat = 200) {
+                ui_screen_height: CGFloat = 0) {
         self.symbol = symbol
         self.title = title
         self.title_color = title_color
@@ -63,7 +64,7 @@ public struct ColumnChartView: View {
         self.selected_median_color = selected_median_color
         self.unselect_median_color = unselect_median_color
         self.selected = selected
-        self.max_height = max_height
+        self.ui_screen_height = ui_screen_height
     }
     
     // MARK: View Swttings
@@ -86,9 +87,7 @@ public struct ColumnChartView: View {
     
     // MARK: State
     @State public var selected: Int
-    public var max_height: CGFloat
-    
-    
+    public var ui_screen_height: CGFloat
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 5){
@@ -124,7 +123,7 @@ public struct ColumnChartView: View {
                      selected_median_color: selected_median_color,
                      unselect_median_color: unselect_median_color,
                      selected: selected,
-                     max_height : max_height
+                     ui_screen_height: ui_screen_height
             )
                 .padding(.top, 5)
         }
@@ -133,6 +132,7 @@ public struct ColumnChartView: View {
             Rectangle()
                 .foregroundColor(background)
                 .cornerRadius(10)
+            
         }
     }
 }
@@ -150,8 +150,8 @@ struct BarGraph: View {
     var show_median: Bool
     var selected_median_color: Color
     var unselect_median_color: Color
-    @State var selected: Int
-    var max_height: CGFloat
+    @State var selected: Int = 0
+    var ui_screen_height: CGFloat
     
     // MARK: VIEW
     var body: some View{
@@ -176,7 +176,6 @@ struct BarGraph: View {
                         }
                     }
                 }
-                
                 
                 // MARK: Bar Graph
                 HStack{
@@ -226,8 +225,10 @@ struct BarGraph: View {
                     .padding(.bottom, 30)
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(height: max_height)
+        // Fixed Height
+        .frame(height: ui_screen_height / 4)
     }
     
     // MARK: FUNCTIONS
@@ -285,7 +286,7 @@ struct AnimatedBarGraph: View{
     // MARK: LOCAL VARIABLES || STATES
     @State var showBar: Bool = false
     let default_color: Array<Color> = [Color("graph_color"), Color("graph_color")]
-    //    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+    let impactMed = UIImpactFeedbackGenerator(style: .medium)
     
     var body: some View{
         VStack(spacing: 0){
@@ -319,7 +320,7 @@ struct AnimatedBarGraph: View{
         .onTapGesture {
             if is_selectable {
                 withAnimation(.easeInOut.delay(0.06)){
-                    //                    impactMed.impactOccurred()
+                    impactMed.impactOccurred()
                     //                    selected = each_graph_data.id //(selected == each_graph_data.id) ? 0 :
                     selected = (selected == each_graph_data.id) ? 0 : each_graph_data.id
                 }

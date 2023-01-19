@@ -12,14 +12,17 @@ import SwiftUI
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct CircleChartScheme: Identifiable, Hashable {
-    public init(id: UUID? = UUID(), value: CGFloat, color: Color, name: String) {
+    public init(id: UUID? = UUID(),
+                value: CGFloat,
+                color: Color,
+                name: String) {
         self.id = id
         self.value = value
         self.color = color
         self.name = name
     }
     
-    public var id: UUID? = UUID()
+    public var id: UUID?
     public var value: CGFloat
     public var color: Color
     public var name: String
@@ -31,13 +34,14 @@ public struct CircleChartScheme: Identifiable, Hashable {
 @available(iOS 15, *)
 public struct CircleChartView: View {
     public init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")),
-                title: String = "", title_color: Color = Color(.systemGreen),
+                title: String = "",
+                title_color: Color = Color(.systemGreen),
                 subtitle: Text = Text("Nutritions"),
                 divider: Bool = false,
                 background: Color = Color.white,
                 data: Array<CircleChartScheme> = [],
-                max_width: CGFloat = 150,
-                min_height: CGFloat = 80) {
+                ui_screen_width: CGFloat = 0,
+                ui_screen_height: CGFloat = 0) {
         self.symbol = symbol
         self.title = title
         self.title_color = title_color
@@ -45,8 +49,8 @@ public struct CircleChartView: View {
         self.divider = divider
         self.background = background
         self.data = data
-        self.max_width = max_width
-        self.min_height = min_height
+        self.ui_screen_width = ui_screen_width
+        self.ui_screen_height = ui_screen_height
     }
     
     // MARK: View Swttings
@@ -57,9 +61,8 @@ public struct CircleChartView: View {
     public var divider: Bool
     public var background: Color
     public var data: Array<CircleChartScheme>
-    
-    public var max_width: CGFloat
-    public var min_height: CGFloat
+    public var ui_screen_width: CGFloat
+    public var ui_screen_height: CGFloat
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 5){
@@ -97,7 +100,7 @@ public struct CircleChartView: View {
                             .foregroundColor(Color("median_gray_color"))
                             .fontWeight(.semibold)
                     }
-                    .frame(maxWidth: max_width, minHeight: min_height, alignment: .center)
+                    .frame(maxWidth: ui_screen_width / 5, minHeight: ui_screen_height / 9, alignment: .center)
                     
                     if data.count != index+1 {
                         Spacer(minLength: 5)
@@ -105,6 +108,8 @@ public struct CircleChartView: View {
                 }
             }
             .padding(.top, 10)
+            
+            
         }
         .padding(20)
         .background{
