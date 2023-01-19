@@ -33,24 +33,24 @@ public struct CircleChartScheme: Identifiable, Hashable {
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct CircleChartView: View {
-    public init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")),
+    public init(symbol: Image = Image(systemName: "flame.fill"),
                 title: String = "",
                 title_color: Color = Color(.systemGreen),
-                subtitle: Text = Text("Nutritions"),
+                subtitle: String = "Nutritions",
+                subtitle_color: Color = Color.black,
                 divider: Bool = false,
                 background: Color = Color.white,
                 data: Array<CircleChartScheme> = [],
-                ui_screen_width: CGFloat = 0,
-                ui_screen_height: CGFloat = 0) {
+                width_ratio: Int = 3) {
         self.symbol = symbol
         self.title = title
         self.title_color = title_color
         self.subtitle = subtitle
+        self.subtitle_color = subtitle_color
         self.divider = divider
         self.background = background
         self.data = data
-        self.ui_screen_width = ui_screen_width
-        self.ui_screen_height = ui_screen_height
+        self.width_ratio = width_ratio
     }
     
     // MARK: View Swttings
@@ -58,13 +58,14 @@ public struct CircleChartView: View {
     public var title: String
     public var title_color: Color
     public var subtitle: Text
+    public var subtitle_color: Color
     public var divider: Bool
     public var background: Color
     public var data: Array<CircleChartScheme>
-    public var ui_screen_width: CGFloat
-    public var ui_screen_height: CGFloat
+    public var width_ratio: Int
     
     public var body: some View {
+        let circle_size: CGFloat = (get_os_width() / CGFloat(width_ratio) - 50)
         VStack(alignment: .leading, spacing: 5){
             // MARK: Title
             HStack{
@@ -80,7 +81,10 @@ public struct CircleChartView: View {
             }
             
             // MARK: SUBTITLE
-            subtitle
+            Text(subtitle)
+                .font(.system(.title2, design: .rounded))
+                .foregroundColor(subtitle_color)
+                .fontWeight(.semibold)
             
             // MARK: DIVIDER
             if divider {
@@ -94,13 +98,13 @@ public struct CircleChartView: View {
                     ZStack(alignment: .center){
                         AnimatedCircleGraphView(data: each_data,
                                                 index: index)
-                        
                         Text(each_data.name)
                             .font(.system(.subheadline, design: .rounded))
                             .foregroundColor(Color("median_gray_color"))
                             .fontWeight(.semibold)
                     }
-                    .frame(maxWidth: ui_screen_width / 5, minHeight: ui_screen_height / 9, alignment: .center)
+                    .frame(maxWidth: circle_size, minHeight: circle_size, alignment: .center)
+                    
                     
                     if data.count != index+1 {
                         Spacer(minLength: 5)
@@ -108,8 +112,6 @@ public struct CircleChartView: View {
                 }
             }
             .padding(.top, 10)
-            
-            
         }
         .padding(20)
         .background{
@@ -134,7 +136,6 @@ struct AnimatedCircleGraphView: View{
         ZStack{
             Circle()
                 .stroke(.gray.opacity(0.3),lineWidth: 15)
-            
             Circle()
                 .trim(from: 0, to: show_chart ? data.value / 100 : 0)
                 .stroke(data.color, style: StrokeStyle(lineWidth: 15, lineCap: .round, lineJoin: .round))
