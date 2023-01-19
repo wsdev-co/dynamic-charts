@@ -54,10 +54,10 @@ public struct CircleChartView: View {
     }
     
     // MARK: View Swttings
-    public var symbol: AnyView
+    public var symbol: Image
     public var title: String
     public var title_color: Color
-    public var subtitle: Text
+    public var subtitle: String
     public var subtitle_color: Color
     public var divider: Bool
     public var background: Color

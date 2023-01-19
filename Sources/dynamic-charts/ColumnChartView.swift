@@ -319,7 +319,6 @@ struct AnimatedBarGraph: View{
                     .foregroundColor(each_graph_data.color)
                     .frame(height: showBar ? nil : 0, alignment: .bottom)
             } else {
-                //                let is_selected: Bool = (selected == each_graph_data.id) //|| selected == 0
                 let is_selected: Bool = (selected == each_graph_data.id || selected == 0)
                 RoundedRectangle(cornerRadius: 5)
                     .fill(LinearGradient(gradient: .init(colors: is_selected ? graph_color : default_chart_gradient), startPoint: .top, endPoint: .bottom))
