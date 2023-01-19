@@ -46,7 +46,8 @@ public struct ColumnChartView: View {
                 show_median: Bool = false,
                 selected_median_color: Color = Color("orange_color"),
                 unselect_median_color: Color = Color("graph_color"),
-                selected: Int = 0) {
+                selected: Int = 0,
+                max_height: CGFloat = 200) {
         self.symbol = symbol
         self.title = title
         self.title_color = title_color
@@ -62,6 +63,7 @@ public struct ColumnChartView: View {
         self.selected_median_color = selected_median_color
         self.unselect_median_color = unselect_median_color
         self.selected = selected
+        self.max_height = max_height
     }
     
     // MARK: View Swttings
@@ -84,103 +86,47 @@ public struct ColumnChartView: View {
     
     // MARK: State
     @State public var selected: Int
+    public var max_height: CGFloat
     
     
     
     public var body: some View {
-        GeometryReader{proxy in
-            VStack(alignment: .leading, spacing: 5){
-                // MARK: Title
-                HStack{
-                    symbol
-                        .foregroundColor(title_color)
-                    
-                    Text(title)
-                        .font(.system(.subheadline, design: .rounded))
-                        .foregroundColor(title_color)
-                        .fontWeight(.semibold)
-                    
-                    Spacer()
-                }
+        VStack(alignment: .leading, spacing: 5){
+            // MARK: Title
+            HStack{
+                symbol
+                    .foregroundColor(title_color)
                 
-                // MARK: SUBTITLE
-                subtitle
+                Text(title)
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundColor(title_color)
+                    .fontWeight(.semibold)
                 
-                // MARK: DIVIDER
-                if divider {
-                    Divider()
-                        .padding(.vertical, 5)
-                }
-                
-                // MARK: Bar Graph
-                ZStack(alignment: .center){
-                    // MARK: Lines appear when show lines equal to true
-                    if x_axis_color != nil {
-                        VStack(spacing: 0){
-                            ForEach(getGraphLines(),id: \.self){line in
-                                HStack {
-                                    Text("\(Int(line))")
-                                        .font(.system(.caption, design: .rounded))
-                                        .foregroundColor(x_name_color)
-                                        .frame(height: 20)
-                                    
-                                    Rectangle()
-                                        .fill(x_axis_color!)
-                                        .frame(height: 1)
-                                }
-                                .frame(maxHeight: .infinity,alignment: .bottom)
-                                .offset(y: -15)
-                            }
-                        }
-                    }
-                    
-                    
-                    // MARK: Bar Graph
-                    HStack{
-                        ForEach(Array(zip(chart_data.indices, chart_data)), id: \.0){ index, each_data in
-                            VStack(spacing: 0){
-                                AnimatedBarGraph(selected: $selected,
-                                                 each_graph_data: each_data,
-                                                 index: index,
-                                                 graph_color: chart_gradient,
-                                                 is_selectable: is_selectable,
-                                                 show_values: (x_name_color != nil))
-                                    .frame(height: each_data.value == 0 ? 0 : getBarHeight(point: each_data.value, size: proxy.size))
-                                
-                                // MARK: Bottom Text
-                                Text(each_data.name)
-                                    .font(.system(.caption2, design: .rounded))
-                                    .foregroundColor(x_name_color ?? Color(.white).opacity(0))
-                                    .frame(height: 25,alignment: .bottom)
-                            }
-                            
-                            // Spacer arguments
-                            if chart_data.count != index+1 {
-                                Spacer(minLength: 3)
-                            }
-                        }
-                    }
-                    .padding(.leading, (x_axis_color != nil) ? 30 : 0)
-                    
-                    // MARK: MEDIAN DATA
-                    if show_median {
-                        let median = getMax()/2
-                        VStack (alignment: .leading, spacing: 0){
-                            Text(String(format: "%.0f", median))
-                                .font(.system(.callout, design: .rounded))
-                                .foregroundColor(selected == 0 ? unselect_median_color : selected_median_color.opacity(0.8))
-                                .fontWeight(.semibold)
-                            
-                            RoundedRectangle(cornerRadius: 5)
-                                .foregroundColor(selected == 0 ? unselect_median_color : selected_median_color.opacity(0.8))
-                                .frame(height: 5)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.leading, (x_axis_color != nil) ? 30 : 0)
-                        .padding(.bottom, 30)
-                    }
-                }
+                Spacer()
             }
+            
+            // MARK: SUBTITLE
+            subtitle
+            
+            // MARK: DIVIDER
+            if divider {
+                Divider()
+                    .padding(.vertical, 5)
+            }
+            
+            // MARK: Bar Graph
+            BarGraph(graph_data: chart_data,
+                     x_axis_color: x_axis_color,
+                     x_name_color: x_name_color,
+                     graph_gradient: chart_gradient,
+                     is_selectable: is_selectable,
+                     show_median: show_median,
+                     selected_median_color: selected_median_color,
+                     unselect_median_color: unselect_median_color,
+                     selected: selected,
+                     max_height : max_height
+            )
+                .padding(.top, 5)
         }
         .padding(20)
         .background{
@@ -241,81 +187,84 @@ struct BarGraph: View {
     var show_median: Bool
     var selected_median_color: Color
     var unselect_median_color: Color
-    @State var selected: Int = 0
+    @State var selected: Int
+    var max_height: CGFloat
     
-    var screen_size: CGSize
     // MARK: VIEW
     var body: some View{
-        ZStack(alignment: .center){
-            // MARK: Lines appear when show lines equal to true
-            if x_axis_color != nil {
-                VStack(spacing: 0){
-                    ForEach(getGraphLines(),id: \.self){line in
-                        HStack {
-                            Text("\(Int(line))")
-                                .font(.system(.caption, design: .rounded))
-                                .foregroundColor(x_name_color)
-                                .frame(height: 20)
-                            
-                            Rectangle()
-                                .fill(x_axis_color!)
-                                .frame(height: 1)
-                        }
-                        .frame(maxHeight: .infinity,alignment: .bottom)
-                        .offset(y: -15)
-                    }
-                }
-            }
-            
-            
-            // MARK: Bar Graph
-            HStack{
-                ForEach(Array(zip(graph_data.indices, graph_data)), id: \.0){ index, each_data in
+        GeometryReader{proxy in
+            ZStack(alignment: .center){
+                // MARK: Lines appear when show lines equal to true
+                if x_axis_color != nil {
                     VStack(spacing: 0){
-                        VStack(spacing: 5){
-                            AnimatedBarGraph(selected: $selected,
-                                             each_graph_data: each_data,
-                                             index: index,
-                                             graph_color: graph_gradient,
-                                             is_selectable: is_selectable,
-                                             show_values: (x_name_color != nil))
+                        ForEach(getGraphLines(),id: \.self){line in
+                            HStack {
+                                Text("\(Int(line))")
+                                    .font(.system(.caption, design: .rounded))
+                                    .foregroundColor(x_name_color)
+                                    .frame(height: 20)
+                                
+                                Rectangle()
+                                    .fill(x_axis_color!)
+                                    .frame(height: 1)
+                            }
+                            .frame(maxHeight: .infinity,alignment: .bottom)
+                            .offset(y: -15)
                         }
-                        .frame(height: each_data.value == 0 ? 0 : getBarHeight(point: each_data.value, size: screen_size))
+                    }
+                }
+                
+                
+                // MARK: Bar Graph
+                HStack{
+                    ForEach(Array(zip(graph_data.indices, graph_data)), id: \.0){ index, each_data in
+                        VStack(spacing: 0){
+                            VStack(spacing: 5){
+                                AnimatedBarGraph(selected: $selected,
+                                                 each_graph_data: each_data,
+                                                 index: index,
+                                                 graph_color: graph_gradient,
+                                                 is_selectable: is_selectable,
+                                                 show_values: (x_name_color != nil))
+                            }
+                            .frame(height: each_data.value == 0 ? 0 : getBarHeight(point: each_data.value, size: proxy.size))
+                            
+                            // MARK: Bottom Text
+                            Text(each_data.name)
+                                .font(.system(.caption2, design: .rounded))
+                                .foregroundColor(x_name_color ?? Color(.white).opacity(0))
+                                .frame(height: 25,alignment: .bottom)
+                        }
+                        .frame(maxWidth: 30, maxHeight: .infinity, alignment: .bottom)
                         
-                        // MARK: Bottom Text
-                        Text(each_data.name)
-                            .font(.system(.caption2, design: .rounded))
-                            .foregroundColor(x_name_color ?? Color(.white).opacity(0))
-                            .frame(height: 25,alignment: .bottom)
-                    }
-                    .frame(maxWidth: 30, maxHeight: .infinity, alignment: .bottom)
-                    
-                    // Spacer arguments
-                    if graph_data.count != index+1 {
-                        Spacer(minLength: 3)
+                        // Spacer arguments
+                        if graph_data.count != index+1 {
+                            Spacer(minLength: 3)
+                        }
                     }
                 }
-            }
-            .padding(.leading, (x_axis_color != nil) ? 30 : 0)
-            
-            // MARK: MEDIAN DATA
-            if show_median {
-                let median = getMax()/2
-                VStack (alignment: .leading, spacing: 0){
-                    Text(String(format: "%.0f", median))
-                        .font(.system(.callout, design: .rounded))
-                        .foregroundColor(selected == 0 ? unselect_median_color : selected_median_color.opacity(0.8))
-                        .fontWeight(.semibold)
-                    
-                    RoundedRectangle(cornerRadius: 5)
-                        .foregroundColor(selected == 0 ? unselect_median_color : selected_median_color.opacity(0.8))
-                        .frame(height: 5)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.leading, (x_axis_color != nil) ? 30 : 0)
-                .padding(.bottom, 30)
+                
+                // MARK: MEDIAN DATA
+                if show_median {
+                    let median = getMax()/2
+                    VStack (alignment: .leading, spacing: 0){
+                        Text(String(format: "%.0f", median))
+                            .font(.system(.callout, design: .rounded))
+                            .foregroundColor(selected == 0 ? unselect_median_color : selected_median_color.opacity(0.8))
+                            .fontWeight(.semibold)
+                        
+                        RoundedRectangle(cornerRadius: 5)
+                            .foregroundColor(selected == 0 ? unselect_median_color : selected_median_color.opacity(0.8))
+                            .frame(height: 5)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.leading, (x_axis_color != nil) ? 30 : 0)
+                    .padding(.bottom, 30)
+                }
             }
         }
+        .frame(height: max_height)
     }
     
     // MARK: FUNCTIONS
@@ -415,14 +364,3 @@ struct AnimatedBarGraph: View{
         }
     }
 }
-
-
-// MARK: Custom Rounded Rectangle (5,5,0,0)
-//@available(macOS 12, *)
-//@available(iOS 15, *)
-//struct RoundedShape : Shape {
-//    func path(in rect: CGRect) -> Path {
-//        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: [.topLeft,.topRight], cornerRadii: CGSize(width: 5, height: 5))
-//        return Path(path.cgPath)
-//    }
-//}
