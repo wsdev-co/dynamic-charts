@@ -98,6 +98,7 @@ public struct BarChartView: View {
                     .font(.system(.subheadline, design: .rounded))
                     .foregroundColor(title_color)
                     .fontWeight(.semibold)
+                    .multilineTextAlignment(.leading)
                 
                 Spacer()
             }
@@ -107,6 +108,7 @@ public struct BarChartView: View {
                 .font(.system(.title2, design: .rounded))
                 .foregroundColor(subtitle_color)
                 .fontWeight(.semibold)
+                .multilineTextAlignment(.leading)
             
             // MARK: DIVIDER
             if divider {

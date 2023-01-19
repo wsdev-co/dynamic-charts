@@ -108,6 +108,7 @@ public struct ColumnChartView: View {
                     .font(.system(.subheadline, design: .rounded))
                     .foregroundColor(title_color)
                     .fontWeight(.semibold)
+                    .multilineTextAlignment(.leading)
                 
                 Spacer()
             }
@@ -117,6 +118,7 @@ public struct ColumnChartView: View {
                 .font(.system(.title2, design: .rounded))
                 .foregroundColor(subtitle_color)
                 .fontWeight(.semibold)
+                .multilineTextAlignment(.leading)
             
             // MARK: DIVIDER
             if divider {
