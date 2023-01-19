@@ -39,7 +39,7 @@ public struct BarChartScheme: Identifiable{
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct BarChartView: View {
-    public init(destination: AnyView? = nil
+    public init(destination: AnyView? = nil,
                 symbol: Image = Image(systemName: "flame.fill"),
                 title: String = "",
                 title_color: Color = Color(.systemGreen),
@@ -71,7 +71,7 @@ public struct BarChartView: View {
     
     
     // MARK: View Swttings
-    public var destination; AnyView
+    public var destination: AnyView
     public var symbol: Image
     public var title: String
     public var title_color: Color
