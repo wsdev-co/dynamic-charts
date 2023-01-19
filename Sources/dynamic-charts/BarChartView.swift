@@ -160,7 +160,7 @@ public struct BarChartView: View {
         
         let max = GetMax()
         
-        let width = (point / max) * (size.width - 70)
+        let width = (point / max) * (size - 70)
         
         return width + 1
     }
@@ -189,7 +189,7 @@ struct HorizontalAnimatedBarGraph: View {
     // MARK: LOCAL VARIABLES || STATES
     @State var showBar: Bool = false
     let default_color: Array<Color> = [Color("graph_color"), Color("graph_color")]
-    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+//    let impactMed = UIImpactFeedbackGenerator(style: .medium)
     
     var body: some View{
         VStack(spacing: 1){
@@ -215,7 +215,7 @@ struct HorizontalAnimatedBarGraph: View {
         .onTapGesture {
             if is_selectable {
                 withAnimation(.easeInOut){
-                    impactMed.impactOccurred()
+//                    impactMed.impactOccurred()
                     selected = (selected == each_graph_data.id) ? 0 : each_graph_data.id
                 }
             }

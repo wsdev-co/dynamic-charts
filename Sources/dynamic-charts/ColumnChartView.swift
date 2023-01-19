@@ -286,7 +286,7 @@ struct AnimatedBarGraph: View{
     // MARK: LOCAL VARIABLES || STATES
     @State var showBar: Bool = false
     let default_color: Array<Color> = [Color("graph_color"), Color("graph_color")]
-    let impactMed = UIImpactFeedbackGenerator(style: .medium)
+//    let impactMed = UIImpactFeedbackGenerator(style: .medium)
     
     var body: some View{
         VStack(spacing: 0){
@@ -320,8 +320,7 @@ struct AnimatedBarGraph: View{
         .onTapGesture {
             if is_selectable {
                 withAnimation(.easeInOut.delay(0.06)){
-                    impactMed.impactOccurred()
-                    //                    selected = each_graph_data.id //(selected == each_graph_data.id) ? 0 :
+//                    impactMed.impactOccurred()
                     selected = (selected == each_graph_data.id) ? 0 : each_graph_data.id
                 }
             }
