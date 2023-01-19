@@ -33,7 +33,8 @@ public struct CircleChartScheme: Identifiable, Hashable {
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct CircleChartView: View {
-    public init(symbol: Image = Image(systemName: "flame.fill"),
+    public init(destination: AnyView? = nil,
+                symbol: Image = Image(systemName: "flame.fill"),
                 title: String = "",
                 title_color: Color = Color(.systemGreen),
                 subtitle: String = "Nutritions",
@@ -42,6 +43,7 @@ public struct CircleChartView: View {
                 background: Color = Color.white,
                 data: Array<CircleChartScheme> = [],
                 width_ratio: Int = 3) {
+        self.destination = destination
         self.symbol = symbol
         self.title = title
         self.title_color = title_color
@@ -54,6 +56,7 @@ public struct CircleChartView: View {
     }
     
     // MARK: View Swttings
+    public var destination: AnyView?
     public var symbol: Image
     public var title: String
     public var title_color: Color
@@ -67,28 +70,37 @@ public struct CircleChartView: View {
     public var body: some View {
         let circle_size: CGFloat = (get_os_width() / CGFloat(width_ratio) - 50)
         VStack(alignment: .leading, spacing: 5){
-            // MARK: Title
-            HStack{
-                symbol
-                    .foregroundColor(title_color)
-                
-                Text(title)
-                    .font(.system(.subheadline, design: .rounded))
-                    .foregroundColor(title_color)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.leading)
-
-                
-                Spacer()
+            NavigationLink {
+                if destination != nil {
+                    destination!
+                }
+            } label: {
+                VStack(alignment: .leading, spacing: 5){
+                    // MARK: Title
+                    HStack{
+                        symbol
+                            .foregroundColor(title_color)
+                        
+                        Text(title)
+                            .font(.system(.subheadline, design: .rounded))
+                            .foregroundColor(title_color)
+                            .fontWeight(.semibold)
+                            .multilineTextAlignment(.leading)
+                        
+                        
+                        Spacer()
+                    }
+                    
+                    // MARK: SUBTITLE
+                    Text(subtitle)
+                        .font(.system(.title2, design: .rounded))
+                        .foregroundColor(subtitle_color)
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.leading)
+                }
             }
+            .disabled(destination == nil)
             
-            // MARK: SUBTITLE
-            Text(subtitle)
-                .font(.system(.title2, design: .rounded))
-                .foregroundColor(subtitle_color)
-                .fontWeight(.semibold)
-                .multilineTextAlignment(.leading)
-
             
             // MARK: DIVIDER
             if divider {
