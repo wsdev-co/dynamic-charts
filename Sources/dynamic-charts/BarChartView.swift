@@ -71,7 +71,7 @@ public struct BarChartView: View {
     
     
     // MARK: View Swttings
-    public var destination: AnyView
+    public var destination: AnyView?
     public var symbol: Image
     public var title: String
     public var title_color: Color
