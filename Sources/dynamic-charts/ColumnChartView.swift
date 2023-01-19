@@ -45,7 +45,7 @@ public struct ColumnChartView: View {
                 x_axis_color: Color? = Color.gray.opacity(0.2),
                 x_name_color: Color? = Color.gray,
                 chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)],
-                default_chart_gradient: Array<Color> = [Color.gray, Color.gray],
+                default_chart_gradient: Array<Color> = [Color.gray.opacity(0.3), Color.gray.opacity(0.3)],
                 is_selectable: Bool = false,
                 show_median: Bool = false,
                 selected_median_color: Color = Color("orange_color"),

@@ -48,7 +48,7 @@ public struct BarChartView: View {
                 background: Color = Color.white,
                 chart_data: Array<BarChartScheme> = [],
                 chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)],
-                default_chart_gradient: Array<Color> = [Color.gray, Color.gray],
+                default_chart_gradient: Array<Color> = [Color.gray.opacity(0.3), Color.gray.opacity(0.3)],
                 is_selectable: Bool = false,
                 selected: Int = 0,
                 width_ratio: Int = 1) {
