@@ -39,7 +39,8 @@ public struct BarChartScheme: Identifiable{
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct BarChartView: View {
-    public init(symbol: Image = Image(systemName: "flame.fill"),
+    public init(destination: AnyView? = nil
+                symbol: Image = Image(systemName: "flame.fill"),
                 title: String = "",
                 title_color: Color = Color(.systemGreen),
                 subtitle: String = "Nutritions",
@@ -52,6 +53,7 @@ public struct BarChartView: View {
                 is_selectable: Bool = false,
                 selected: Int = 0,
                 width_ratio: Int = 1) {
+        self.destination = destination
         self.symbol = symbol
         self.title = title
         self.title_color = title_color
@@ -69,6 +71,7 @@ public struct BarChartView: View {
     
     
     // MARK: View Swttings
+    public var destination; AnyView
     public var symbol: Image
     public var title: String
     public var title_color: Color
@@ -90,25 +93,35 @@ public struct BarChartView: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 5){
             // MARK: Title
-            HStack{
-                symbol
-                    .foregroundColor(title_color)
-                
-                Text(title)
-                    .font(.system(.subheadline, design: .rounded))
-                    .foregroundColor(title_color)
-                    .fontWeight(.semibold)
-                    .multilineTextAlignment(.leading)
-                
-                Spacer()
+            NavigationLink {
+                if destination != nil {
+                    destination!
+                }
+            } label: {
+                VStack(alignment: .leading, spacing: 5){
+                    // MARK: Title
+                    HStack{
+                        symbol
+                            .foregroundColor(title_color)
+                        
+                        Text(title)
+                            .font(.system(.subheadline, design: .rounded))
+                            .foregroundColor(title_color)
+                            .fontWeight(.semibold)
+                            .multilineTextAlignment(.leading)
+                        
+                        Spacer()
+                    }
+                    
+                    // MARK: SUBTITLE
+                    Text(subtitle)
+                        .font(.system(.title2, design: .rounded))
+                        .foregroundColor(subtitle_color)
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.leading)
+                }
             }
-            
-            // MARK: SUBTITLE
-            Text(subtitle)
-                .font(.system(.title2, design: .rounded))
-                .foregroundColor(subtitle_color)
-                .fontWeight(.semibold)
-                .multilineTextAlignment(.leading)
+            .disabled(destination == nil)
             
             // MARK: DIVIDER
             if divider {
@@ -233,8 +246,8 @@ struct HorizontalAnimatedBarGraph: View {
             if is_selectable {
                 withAnimation(.easeInOut){
 #if os(iOS)
-let impactMed =  UIImpactFeedbackGenerator(style: .medium)
-impactMed.impactOccurred()
+                    let impactMed =  UIImpactFeedbackGenerator(style: .medium)
+                    impactMed.impactOccurred()
 #endif
                     selected = (selected == each_graph_data.id) ? 0 : each_graph_data.id
                 }
