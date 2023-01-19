@@ -34,7 +34,8 @@ public struct ColumnChartScheme: Identifiable{
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct ColumnChartView: View {
-    public init(symbol: Image = Image(systemName: "flame.fill"),
+    public init(destination: AnyView? = nil,
+                symbol: Image = Image(systemName: "flame.fill"),
                 title: String = "",
                 title_color: Color = Color(.systemGreen),
                 subtitle: String = "Nutritions",
@@ -52,6 +53,7 @@ public struct ColumnChartView: View {
                 unselect_median_color: Color = Color("graph_color"),
                 selected: Int = 0,
                 height_ratio: Int = 4) {
+        self.destination = destination
         self.symbol = symbol
         self.title = title
         self.title_color = title_color
@@ -73,6 +75,7 @@ public struct ColumnChartView: View {
     }
     
     // MARK: View Swttings
+    public var destination: AnyView?
     public var symbol: Image
     public var title: String
     public var title_color: Color
@@ -99,26 +102,33 @@ public struct ColumnChartView: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 5){
-            // MARK: Title
-            HStack{
-                symbol
-                    .foregroundColor(title_color)
+            NavigationLink {
+                if destination != nil {
+                    destination!
+                }
+            } label: {
+                // MARK: Title
+                HStack{
+                    symbol
+                        .foregroundColor(title_color)
+                    
+                    Text(title)
+                        .font(.system(.subheadline, design: .rounded))
+                        .foregroundColor(title_color)
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.leading)
+                    
+                    Spacer()
+                }
                 
-                Text(title)
-                    .font(.system(.subheadline, design: .rounded))
-                    .foregroundColor(title_color)
+                // MARK: SUBTITLE
+                Text(subtitle)
+                    .font(.system(.title2, design: .rounded))
+                    .foregroundColor(subtitle_color)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.leading)
-                
-                Spacer()
             }
-            
-            // MARK: SUBTITLE
-            Text(subtitle)
-                .font(.system(.title2, design: .rounded))
-                .foregroundColor(subtitle_color)
-                .fontWeight(.semibold)
-                .multilineTextAlignment(.leading)
+            .disabled(destination == nil)
             
             // MARK: DIVIDER
             if divider {
