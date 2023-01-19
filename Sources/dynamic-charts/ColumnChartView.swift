@@ -217,7 +217,7 @@ struct BarGraph: View {
                                              graph_color: graph_gradient,
                                              is_selectable: is_selectable,
                                              show_values: (x_name_color != nil),
-                                             showBar: show_animation,
+                                             showBar: !show_animation,
                                              default_chart_gradient: default_chart_gradient)
                         }
                         .frame(height: each_data.value == 0 ? 0 : get_column_height(column_value: each_data.value))
