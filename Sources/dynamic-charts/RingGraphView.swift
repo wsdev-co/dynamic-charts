@@ -30,7 +30,14 @@ public struct CircleChartScheme: Identifiable, Hashable {
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct CircleChartView: View {
-    public init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")), title: String = "", title_color: Color = Color(.systemGreen), subtitle: Text = Text("Nutritions"), divider: Bool = false, background: Color = Color.white, data: Array<CircleChartScheme> = []) {
+    public init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")),
+                title: String = "", title_color: Color = Color(.systemGreen),
+                subtitle: Text = Text("Nutritions"),
+                divider: Bool = false,
+                background: Color = Color.white,
+                data: Array<CircleChartScheme> = [],
+                max_width: CGFloat = 150,
+                min_height: CGFloat = 80) {
         self.symbol = symbol
         self.title = title
         self.title_color = title_color
@@ -38,6 +45,8 @@ public struct CircleChartView: View {
         self.divider = divider
         self.background = background
         self.data = data
+        self.max_width = max_width
+        self.min_height = min_height
     }
     
     // MARK: View Swttings
@@ -47,64 +56,62 @@ public struct CircleChartView: View {
     public var subtitle: Text
     public var divider: Bool
     public var background: Color
-    
     public var data: Array<CircleChartScheme>
     
+    public var max_width: CGFloat
+    public var min_height: CGFloat
+    
     public var body: some View {
-        GeometryReader { proxy in
-            VStack(alignment: .leading, spacing: 5){
-                // MARK: Title
-                HStack{
-                    symbol
-                        .foregroundColor(title_color)
-                    
-                    Text(title)
-                        .font(.system(.subheadline, design: .rounded))
-                        .foregroundColor(title_color)
-                        .fontWeight(.semibold)
-                    
-                    Spacer()
-                }
+        VStack(alignment: .leading, spacing: 5){
+            // MARK: Title
+            HStack{
+                symbol
+                    .foregroundColor(title_color)
                 
-                // MARK: SUBTITLE
-                subtitle
+                Text(title)
+                    .font(.system(.subheadline, design: .rounded))
+                    .foregroundColor(title_color)
+                    .fontWeight(.semibold)
                 
-                // MARK: DIVIDER
-                if divider {
-                    Divider()
-                        .padding(.vertical, 5)
-                }
-                
-                // MARK: Bar Graph
-                HStack{
-                    ForEach(Array(zip(data.indices, data)), id: \.0){ index, each_data in
-                        ZStack(alignment: .center){
-                            AnimatedCircleGraphView(data: each_data,
-                                                    index: index)
-                            
-                            Text(each_data.name)
-                                .font(.system(.subheadline, design: .rounded))
-                                .foregroundColor(Color("median_gray_color"))
-                                .fontWeight(.semibold)
-                        }
-                        .frame(maxWidth: proxy.size.width / 5, minHeight: proxy.size.height / 9, alignment: .center)
+                Spacer()
+            }
+            
+            // MARK: SUBTITLE
+            subtitle
+            
+            // MARK: DIVIDER
+            if divider {
+                Divider()
+                    .padding(.vertical, 5)
+            }
+            
+            // MARK: Bar Graph
+            HStack{
+                ForEach(Array(zip(data.indices, data)), id: \.0){ index, each_data in
+                    ZStack(alignment: .center){
+                        AnimatedCircleGraphView(data: each_data,
+                                                index: index)
                         
-                        if data.count != index+1 {
-                            Spacer(minLength: 5)
-                        }
+                        Text(each_data.name)
+                            .font(.system(.subheadline, design: .rounded))
+                            .foregroundColor(Color("median_gray_color"))
+                            .fontWeight(.semibold)
+                    }
+                    .frame(maxWidth: max_width, minHeight: min_height, alignment: .center)
+                    
+                    if data.count != index+1 {
+                        Spacer(minLength: 5)
                     }
                 }
-                .padding(.top, 10)
-                
-                
             }
-            .padding(20)
-            .background{
-                Rectangle()
-                    .foregroundColor(background)
-                    .cornerRadius(10)
-                
-            }
+            .padding(.top, 10)
+        }
+        .padding(20)
+        .background{
+            Rectangle()
+                .foregroundColor(background)
+                .cornerRadius(10)
+            
         }
     }
 }
