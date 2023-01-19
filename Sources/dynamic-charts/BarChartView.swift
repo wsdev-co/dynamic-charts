@@ -34,7 +34,16 @@ public struct BarChartScheme: Identifiable{
 @available(macOS 12, *)
 @available(iOS 15, *)
 public struct BarChartView: View {
-    public init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")), title: String = "", title_color: Color = Color(.systemGreen), subtitle: Text = Text("Nutritions"), divider: Bool = false, background: Color = Color.white, chart_data: Array<BarChartScheme> = [], chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)], is_selectable: Bool = false, selected: Int = 0) {
+    public init(symbol: AnyView = AnyView(Image(systemName: "flame.fill")),
+                title: String = "",
+                title_color: Color = Color(.systemGreen),
+                subtitle: Text = Text("Nutritions"),
+                divider: Bool = false,
+                background: Color = Color.white,
+                chart_data: Array<BarChartScheme> = [],
+                chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)],
+                is_selectable: Bool = false, selected: Int = 0,
+                max_height: CGFloat = 200) {
         self.symbol = symbol
         self.title = title
         self.title_color = title_color
@@ -45,6 +54,7 @@ public struct BarChartView: View {
         self.chart_gradient = chart_gradient
         self.is_selectable = is_selectable
         self.selected = selected
+        self.max_height = max_height
     }
     
     
@@ -63,6 +73,7 @@ public struct BarChartView: View {
     
     // MARK: State
     @State public var selected: Int
+    public var max_height: CGFloat
     
     public var body: some View {
         GeometryReader { proxy in
@@ -136,6 +147,7 @@ public struct BarChartView: View {
                 
             }
         }
+        .frame(height: max_height)
     }
     
     // MARK: FUNCTIONS

@@ -135,43 +135,6 @@ public struct ColumnChartView: View {
                 .cornerRadius(10)
         }
     }
-    
-    func getBarHeight(point: CGFloat,size: CGSize)->CGFloat{
-        
-        let max = getMax()
-        
-        let height = (point / max) * (size.height - 37)
-        
-        return height
-    }
-    
-    // MARK: Getting Sample Graph Lines based on max Value...
-    func getGraphLines()->[CGFloat]{
-        
-        let max = getMax()
-        
-        var lines: [CGFloat] = []
-        
-        lines.append(max)
-        
-        for index in 1...5{
-            
-            // dividing the max by 4 and iterating as index for graph lines...
-            let progress = max / 5
-            
-            lines.append(max - (progress * CGFloat(index)))
-        }
-        
-        return lines
-    }
-    
-    // MARK: Getting Max....
-    func getMax()->CGFloat{
-        let max = chart_data.max { first, scnd in
-            return scnd.value > first.value
-        }?.value ?? 0
-        return max
-    }
 }
 
 
