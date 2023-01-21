@@ -10,7 +10,7 @@ import SwiftUI
 
 
 // MARK: SCHEME
-//@available(macOS 12, *)
+@available(macOS 12, *)
 @available(iOS 15, *)
 public struct ColumnChartScheme: Identifiable{
     public init(id: Int,
@@ -31,7 +31,7 @@ public struct ColumnChartScheme: Identifiable{
 
 
 // MARK: VIEW
-//@available(macOS 12, *)
+@available(macOS 12, *)
 @available(iOS 15, *)
 public struct ColumnChartView: View {
     public init(destination: AnyView? = nil,
@@ -168,7 +168,7 @@ public struct ColumnChartView: View {
 
 
 // MARK: GRAPH CHARTS
-//@available(macOS 12, *)
+@available(macOS 12, *)
 @available(iOS 15, *)
 struct BarGraph: View {
     var graph_data: Array<ColumnChartScheme>
@@ -309,7 +309,7 @@ struct BarGraph: View {
 
 
 // MARK: FOR ANIMATION
-//@available(macOS 12, *)
+@available(macOS 12, *)
 @available(iOS 15, *)
 struct AnimatedBarGraph: View{
     // MARK: STATES

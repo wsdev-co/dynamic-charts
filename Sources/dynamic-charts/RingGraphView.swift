@@ -9,7 +9,7 @@ import SwiftUI
 
 
 // MARK: CIRCLE GRAPH SCHEME
-//@available(macOS 12, *)
+@available(macOS 12, *)
 @available(iOS 15, *)
 public struct CircleChartScheme: Identifiable, Hashable {
     public init(id: UUID? = UUID(),
@@ -30,7 +30,7 @@ public struct CircleChartScheme: Identifiable, Hashable {
 
 
 // MARK: VIEW
-//@available(macOS 12, *)
+@available(macOS 12, *)
 @available(iOS 15, *)
 public struct CircleChartView: View {
     public init(destination: AnyView? = nil,
@@ -141,7 +141,7 @@ public struct CircleChartView: View {
 
 
 // MARK: ANIMATED CIRCLE GRAPH
-//@available(macOS 12, *)
+@available(macOS 12, *)
 @available(iOS 15, *)
 struct AnimatedCircleGraphView: View{
     @State var show_chart: Bool = false
