@@ -111,6 +111,12 @@ public struct BarChartView: View {
                             .multilineTextAlignment(.leading)
                         
                         Spacer()
+                        
+                        if destination != nil {
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(Color(.lightGray))
+                            .font(.system(.body))
+                        }
                     }
                     
                     // MARK: SUBTITLE

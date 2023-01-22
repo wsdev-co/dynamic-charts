@@ -89,6 +89,12 @@ public struct CircleChartView: View {
                         
                         
                         Spacer()
+                        
+                        if destination != nil {
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(Color(.lightGray))
+                            .font(.system(.body))
+                        }
                     }
                     
                     // MARK: SUBTITLE
