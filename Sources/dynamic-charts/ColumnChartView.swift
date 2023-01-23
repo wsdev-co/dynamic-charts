@@ -45,7 +45,7 @@ public struct ColumnChartView: View {
                 chart_data: Array<ColumnChartScheme> = [],
                 x_axis_color: Color? = Color.gray.opacity(0.2),
                 x_name_color: Color? = Color.gray,
-                rotate_degree: Int = 0,
+                rotate_degree: Double = 0.0,
                 chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)],
                 default_chart_gradient: Array<Color> = [Color.gray.opacity(0.3), Color.gray.opacity(0.3)],
                 show_animation: Bool = true,
@@ -92,7 +92,7 @@ public struct ColumnChartView: View {
     public var chart_data: Array<ColumnChartScheme>
     public var x_axis_color: Color?
     public var x_name_color: Color?
-    public var rotate_degree: Int
+    public var rotate_degree: Double
     public var chart_gradient: Array<Color>
     public var default_chart_gradient: Array<Color>
     public var show_animation: Bool
@@ -195,7 +195,7 @@ struct BarGraph: View {
     @State var selected: Int = 0
     var height_ratio: Int = 4
     var value_color: Color
-    var rotate_degree: Int
+    var rotate_degree: Double
     
     // MARK: VIEW
     var body: some View{
@@ -241,7 +241,7 @@ struct BarGraph: View {
                             .font(.system(.caption2, design: .rounded))
                             .foregroundColor(x_name_color ?? Color(.white).opacity(0))
                             .frame(height: 25,alignment: .bottom)
-                            .rotationEffect(.degrees(rotate_degree))
+                            .rotationEffect(.degrees(90))
                     }
                     .frame(maxWidth: 30, maxHeight: .infinity, alignment: .bottom)
                     
