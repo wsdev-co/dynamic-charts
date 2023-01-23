@@ -159,7 +159,7 @@ public struct ColumnChartView: View {
                      selected_median_color: selected_median_color,
                      unselect_median_color: unselect_median_color,
                      selected: selected,
-                     value_color: subtitle_color,
+                     value_color: subtitle_color
             )
                 .padding(.top, 5)
         }
@@ -288,6 +288,7 @@ struct BarGraph: View {
     
     // MARK: Getting Sample Graph Lines based on max Value...
     func get_chart_lines() -> [CGFloat] {
+        
         
         // max value of data set.
         let max_value = get_max_value()
