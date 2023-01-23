@@ -195,7 +195,7 @@ struct BarGraph: View {
     @State var selected: Int = 0
     var height_ratio: Int = 4
     var value_color: Color
-    var rotate_degree: Bool
+    var rotate_degree: Int
     
     // MARK: VIEW
     var body: some View{
