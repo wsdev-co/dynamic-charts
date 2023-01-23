@@ -256,7 +256,7 @@ struct BarGraph: View {
             // MARK: MEDIAN DATA
             if show_median {
                 let median = get_max_value()/2
-                VStack (alignment: .leading, spacing: 0){
+                VStack (alignment: .trailing, spacing: 0){
                     Text(String(format: "%.0f", median))
                         .font(.system(.callout, design: .rounded))
                         .foregroundColor(selected == 0 ? unselect_median_color : selected_median_color.opacity(0.8))
