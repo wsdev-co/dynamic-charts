@@ -192,6 +192,7 @@ struct BarGraph: View {
     var height_ratio: Int = 4
     var value_color: Color
     
+    
     // MARK: VIEW
     var body: some View{
         ZStack(alignment: .center){
