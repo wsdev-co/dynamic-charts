@@ -241,7 +241,7 @@ struct BarGraph: View {
                             .font(.system(.caption2, design: .rounded))
                             .foregroundColor(x_name_color ?? Color(.white).opacity(0))
                             .frame(height: 25,alignment: .bottom)
-                            .rotationEffect(.degrees(90))
+                            .rotationEffect(.degrees(rotate_degree))
                     }
                     .frame(maxWidth: 30, maxHeight: .infinity, alignment: .bottom)
                     
