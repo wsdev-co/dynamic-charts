@@ -125,9 +125,9 @@ public struct ColumnChartView: View {
                         Spacer()
                         
                         if destination != nil {
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(Color(.lightGray))
-                                .font(.system(.body))
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(Color(.lightGray))
+                            .font(.system(.body))
                         }
                     }
                     
@@ -158,8 +158,7 @@ public struct ColumnChartView: View {
                      show_median: show_median,
                      selected_median_color: selected_median_color,
                      unselect_median_color: unselect_median_color,
-                     selected: selected,
-                     value_color: subtitle_color
+                     selected: selected
             )
                 .padding(.top, 5)
         }
@@ -190,8 +189,6 @@ struct BarGraph: View {
     var unselect_median_color: Color
     @State var selected: Int = 0
     var height_ratio: Int = 4
-    var value_color: Color
-    
     
     // MARK: VIEW
     var body: some View{
@@ -227,8 +224,7 @@ struct BarGraph: View {
                                              is_selectable: is_selectable,
                                              show_values: (x_name_color != nil),
                                              showBar: !show_animation,
-                                             default_chart_gradient: default_chart_gradient,
-                                             value_color: value_color)
+                                             default_chart_gradient: default_chart_gradient)
                         }
                         .frame(height: each_data.value == 0 ? 0 : get_column_height(column_value: each_data.value))
                         
@@ -251,7 +247,7 @@ struct BarGraph: View {
             // MARK: MEDIAN DATA
             if show_median {
                 let median = get_max_value()/2
-                VStack (alignment: .trailing, spacing: 0){
+                VStack (alignment: .leading, spacing: 0){
                     Text(String(format: "%.0f", median))
                         .font(.system(.callout, design: .rounded))
                         .foregroundColor(selected == 0 ? unselect_median_color : selected_median_color.opacity(0.8))
@@ -289,7 +285,6 @@ struct BarGraph: View {
     
     // MARK: Getting Sample Graph Lines based on max Value...
     func get_chart_lines() -> [CGFloat] {
-        
         
         // max value of data set.
         let max_value = get_max_value()
@@ -330,7 +325,6 @@ struct AnimatedBarGraph: View{
     var graph_color: Array<Color>
     var is_selectable: Bool
     var show_values: Bool
-    var value_color: Color
     
     // MARK: LOCAL VARIABLES || STATES
     @State var showBar: Bool = false
@@ -342,7 +336,7 @@ struct AnimatedBarGraph: View{
             if (selected == each_graph_data.id && show_values){
                 Text(String(format: "%.0f", each_graph_data.value))
                     .font(.system(.caption, design: .rounded))
-                    .foregroundColor(value_color)
+                    .foregroundColor(Color.black)
                     .padding(.bottom,2)
             }
             
