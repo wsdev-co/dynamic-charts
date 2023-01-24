@@ -45,7 +45,6 @@ public struct ColumnChartView: View {
                 chart_data: Array<ColumnChartScheme> = [],
                 x_axis_color: Color? = Color.gray.opacity(0.2),
                 x_name_color: Color? = Color.gray,
-                rotate_degree: Int = 0,
                 chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)],
                 default_chart_gradient: Array<Color> = [Color.gray.opacity(0.3), Color.gray.opacity(0.3)],
                 show_animation: Bool = true,
@@ -66,7 +65,6 @@ public struct ColumnChartView: View {
         self.chart_data = chart_data
         self.x_axis_color = x_axis_color
         self.x_name_color = x_name_color
-        self.rotate_degree = rotate_degree
         self.chart_gradient = chart_gradient
         self.default_chart_gradient = default_chart_gradient
         self.show_animation = show_animation
@@ -92,7 +90,6 @@ public struct ColumnChartView: View {
     public var chart_data: Array<ColumnChartScheme>
     public var x_axis_color: Color?
     public var x_name_color: Color?
-    public var rotate_degree: Int
     public var chart_gradient: Array<Color>
     public var default_chart_gradient: Array<Color>
     public var show_animation: Bool
@@ -128,9 +125,9 @@ public struct ColumnChartView: View {
                         Spacer()
                         
                         if destination != nil {
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(Color(.lightGray))
-                                .font(.system(.body))
+                        Image(systemName: "chevron.right")
+                            .foregroundColor(Color(.lightGray))
+                            .font(.system(.body))
                         }
                     }
                     
@@ -161,9 +158,7 @@ public struct ColumnChartView: View {
                      show_median: show_median,
                      selected_median_color: selected_median_color,
                      unselect_median_color: unselect_median_color,
-                     selected: selected,
-                     value_color: subtitle_color,
-                     rotate_degree: rotate_degree
+                     selected: selected
             )
                 .padding(.top, 5)
         }
@@ -194,8 +189,6 @@ struct BarGraph: View {
     var unselect_median_color: Color
     @State var selected: Int = 0
     var height_ratio: Int = 4
-    var value_color: Color
-    var rotate_degree: Int
     
     // MARK: VIEW
     var body: some View{
@@ -231,8 +224,7 @@ struct BarGraph: View {
                                              is_selectable: is_selectable,
                                              show_values: (x_name_color != nil),
                                              showBar: !show_animation,
-                                             default_chart_gradient: default_chart_gradient,
-                                             value_color: value_color)
+                                             default_chart_gradient: default_chart_gradient)
                         }
                         .frame(height: each_data.value == 0 ? 0 : get_column_height(column_value: each_data.value))
                         
@@ -241,7 +233,6 @@ struct BarGraph: View {
                             .font(.system(.caption2, design: .rounded))
                             .foregroundColor(x_name_color ?? Color(.white).opacity(0))
                             .frame(height: 25,alignment: .bottom)
-                        //                            .rotationEffect(.degrees(rotate_degree))
                     }
                     .frame(maxWidth: 30, maxHeight: .infinity, alignment: .bottom)
                     
@@ -256,7 +247,7 @@ struct BarGraph: View {
             // MARK: MEDIAN DATA
             if show_median {
                 let median = get_max_value()/2
-                VStack (alignment: .trailing, spacing: 0){
+                VStack (alignment: .leading, spacing: 0){
                     Text(String(format: "%.0f", median))
                         .font(.system(.callout, design: .rounded))
                         .foregroundColor(selected == 0 ? unselect_median_color : selected_median_color.opacity(0.8))
@@ -334,7 +325,6 @@ struct AnimatedBarGraph: View{
     var graph_color: Array<Color>
     var is_selectable: Bool
     var show_values: Bool
-    var value_color: Color
     
     // MARK: LOCAL VARIABLES || STATES
     @State var showBar: Bool = false
@@ -346,7 +336,7 @@ struct AnimatedBarGraph: View{
             if (selected == each_graph_data.id && show_values){
                 Text(String(format: "%.0f", each_graph_data.value))
                     .font(.system(.caption, design: .rounded))
-                    .foregroundColor(value_color)
+                    .foregroundColor(Color.black)
                     .padding(.bottom,2)
             }
             
