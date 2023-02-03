@@ -46,6 +46,7 @@ public struct BarChartView: View {
                 subtitle: String = "Nutritions",
                 subtitle_color: Color = Color.black,
                 divider: Bool = false,
+                is_animation: Bool = true,
                 background: Color = Color.white,
                 chart_data: Array<BarChartScheme> = [],
                 chart_gradient: Array<Color> = [Color(.systemCyan),Color(.systemBlue)],
@@ -60,6 +61,7 @@ public struct BarChartView: View {
         self.subtitle = subtitle
         self.subtitle_color = subtitle_color
         self.divider = divider
+        self.is_animation = is_animation
         self.background = background
         self.chart_data = chart_data
         self.chart_gradient = chart_gradient
@@ -78,6 +80,7 @@ public struct BarChartView: View {
     public var subtitle: String
     public var subtitle_color: Color
     public var divider: Bool
+    public var is_animation: Bool
     public var background: Color
     
     // MARK: Graph Settings
@@ -113,9 +116,9 @@ public struct BarChartView: View {
                         Spacer()
                         
                         if destination != nil {
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(Color(.lightGray))
-                            .font(.system(.body))
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(Color(.lightGray))
+                                .font(.system(.body))
                         }
                     }
                     
@@ -159,7 +162,8 @@ public struct BarChartView: View {
                                                        index: index,
                                                        graph_color: chart_gradient,
                                                        is_selectable: is_selectable,
-                                                       default_chart_gradient: default_chart_gradient)
+                                                       default_chart_gradient: default_chart_gradient,
+                                                       showBar: !is_animation)
                                 .frame(width: each_data.value == 0 ? 0 : get_bar_width(bar_value: each_data.value), height: 30, alignment: .leading)
                             
                             if each_data.box_text != nil {
