@@ -125,9 +125,9 @@ public struct ColumnChartView: View {
                         Spacer()
                         
                         if destination != nil {
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(Color(.lightGray))
-                            .font(.system(.body))
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(Color(.lightGray))
+                                .font(.system(.body))
                         }
                     }
                     
