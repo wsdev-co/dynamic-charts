@@ -145,13 +145,13 @@ public struct BarChartView: View {
                         HStack(alignment: .bottom, spacing: 5){
                             if each_data.header != nil {
                                 Text(each_data.header!)
-                                    .font(.system(.title, design: .rounded))
+                                    .font(.system(.headline, design: .rounded))
                                     .fontWeight(.semibold)
                                     .foregroundColor(Color.black)
                             }
                             if each_data.subheader != nil {
                                 Text(each_data.subheader!)
-                                    .font(.system(.body, design: .rounded))
+                                    .font(.system(.footnote, design: .rounded))
                                     .fontWeight(.semibold)
                                     .foregroundColor(Color.gray)
                             }
@@ -168,7 +168,7 @@ public struct BarChartView: View {
                             
                             if each_data.box_text != nil {
                                 Text(each_data.box_text!)
-                                    .font(.system(.subheadline, design: .rounded))
+                                    .font(.system(.footnote, design: .rounded))
                                     .fontWeight(.semibold)
                                     .foregroundColor((selected == each_data.id || selected == 0) ? Color.white : Color(.lightGray))
                                     .padding(10)
