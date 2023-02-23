@@ -117,7 +117,7 @@ public struct ColumnChartView: View {
                             .foregroundColor(title_color)
                         
                         Text(title)
-                            .font(.system(.subheadline, design: .rounded))
+                            .font(.system(.footnote, design: .rounded))
                             .foregroundColor(title_color)
                             .fontWeight(.semibold)
                             .multilineTextAlignment(.leading)
@@ -133,7 +133,7 @@ public struct ColumnChartView: View {
                     
                     // MARK: SUBTITLE
                     Text(subtitle)
-                        .font(.system(.title2, design: .rounded))
+                        .font(.system(.body, design: .rounded))
                         .foregroundColor(subtitle_color)
                         .fontWeight(.semibold)
                         .multilineTextAlignment(.leading)
